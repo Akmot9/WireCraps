@@ -1,7 +1,23 @@
-<script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
+<script>
 import Greet from "./components/Greet.vue";
+import { trace, info, error, attachConsole } from "@tauri-apps/plugin-log";
+
+export default {
+  data() {
+    return {
+      message: 'Hello World!'
+    };
+  },
+  components: {
+    Greet
+  },
+  async created() {
+    // with TargetKind::Webview enabled this function will print logs to the browser console
+    const detach = await attachConsole();
+    info("Info");
+    detach();
+  }
+}
 </script>
 
 <template>
