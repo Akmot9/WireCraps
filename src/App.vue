@@ -1,7 +1,7 @@
 <template>
   <div>
     <header>
-      <h1>Welcome to WireCraps</h1>
+      <h1>WireCraps</h1>
     </header>
   
     <main>
@@ -14,7 +14,7 @@
       <section>
         <h2>Capture Interfaces</h2>
         <ul>
-          <li v-for="(iface, index) in interfaces" :key="index">{{ iface }}</li>
+          <button v-for="(iface, index) in interfaces" :key="index">{{ iface }}</button>
         </ul>
       </section>
     </main>
@@ -31,21 +31,36 @@
 </template>
 
 <style scoped>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+}
+
 header {
-  background-color: #42b983;
-  padding: 10px;
+  background-color: #0070c0;
+  padding: 15px;
   text-align: center;
   color: white;
+  border-bottom: 1px solid #004a80;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 24px;
 }
 
 nav {
   margin: 20px 0;
   padding: 10px;
-  background-color: #333;
+  background-color: #e6e6e6;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 nav h2 {
-  color: white;
+  color: #0070c0;
 }
 
 nav ul {
@@ -58,7 +73,7 @@ nav ul li {
 }
 
 nav ul li a {
-  color: white;
+  color: #0070c0;
   text-decoration: none;
 }
 
@@ -68,14 +83,13 @@ nav ul li a:hover {
 
 main {
   padding: 20px;
-}
-
-h1 {
-  color: white;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 h2 {
-  color: #42b983;
+  color: #0070c0;
 }
 
 ul {
@@ -86,6 +100,22 @@ ul {
 li {
   padding: 5px;
   border-bottom: 1px solid #ddd;
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  background-color: #0070c0;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #005fa3;
 }
 </style>
 
