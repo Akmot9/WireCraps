@@ -4,7 +4,7 @@ mod states;
 use states::SonarState;
 
 mod commands;
-use commands::{hello, get_hostname,get_interfaces};
+use commands::{get_hostname,get_interfaces};
 
 use tauri::{generate_context, generate_handler, Manager};
 use tauri_plugin_log::{Target, TargetKind};
@@ -27,7 +27,6 @@ fn main() {
         })
         .invoke_handler(
             generate_handler![
-                hello,
                 get_hostname,
                 get_interfaces
 

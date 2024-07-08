@@ -4,12 +4,6 @@ use whoami::fallible;
 use pnet::datalink;
 
 #[command]
-pub fn hello(name: &str) -> String {
-    info!("Fonction hello {}", name);
-    format!("Bonjour, {}! Bienvenue dans sonar!", name)
-}
-
-#[command]
 pub fn get_hostname() -> Result<String, String> {
     match fallible::hostname() {
         Ok(hostname) => {

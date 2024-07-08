@@ -1,84 +1,118 @@
-<script>
-import Greet from "./components/Greet.vue";
-import { trace, info, error, attachConsole } from "@tauri-apps/plugin-log";
-import { invoke } from "@tauri-apps/api/core";
-
-export default {
-  data() {
-    return {
-      name: '',
-      message: 'Hello World!'
-    };
-  },
-  components: {
-    Greet
-  },
-  async mounted() {
-    this.fetchHostname();
-  },
-  async created() {
-    this.initializeLogging();
-  },
-  methods: {
-    async fetchHostname() {
-      try {
-        this.name = await invoke("get_hostname");
-      } catch (err) {
-        error(`Failed to get hostname: ${err}`);
-      }
-    },
-    async initializeLogging() {
-      try {
-        const detach = await attachConsole();
-        info("Info");
-        detach();
-      } catch (err) {
-        error(`Failed to attach console: ${err}`);
-      }
-    }
-  }
-}
-</script>
-
 <template>
-  <div class="container">
-    <h1>Welcome to Tauri! {{ name }}</h1>
+  <div>
+    <header>
+      <h1>Welcome to WireCraps</h1>
+    </header>
+  
+    <main>
+      <section>
+        <h2>Open Recent Capture</h2>
+        <ul>
+          <li v-for="(file, index) in folder" :key="index">{{ file }}</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Capture Interfaces</h2>
+        <ul>
+          <li v-for="(iface, index) in interfaces" :key="index">{{ iface }}</li>
+        </ul>
+      </section>
+    </main>
 
-    <div class="row">
-      <a href="https://vitejs.dev" target="_blank">
-        <img src="/vite.svg" class="logo vite" alt="Vite logo" />
-      </a>
-      <a href="https://tauri.app" target="_blank">
-        <img src="/tauri.svg" class="logo tauri" alt="Tauri logo" />
-      </a>
-      <a href="https://vuejs.org/" target="_blank">
-        <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-      </a>
-    </div>
-
-    <p>Click on the Tauri, Vite, and Vue logos to learn more.</p>
-
-    <p>
-      Recommended IDE setup:
-      <a href="https://code.visualstudio.com/" target="_blank">VS Code</a>
-      +
-      <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
-      +
-      <a href="https://github.com/tauri-apps/tauri-vscode" target="_blank">Tauri</a>
-      +
-      <a href="https://github.com/rust-lang/rust-analyzer" target="_blank">rust-analyzer</a>
-    </p>
-
-    <Greet />
+    <nav>
+      <h2>About WireCraps</h2>
+      <ul>
+        <li><a href="#">User Guide</a></li>
+        <li><a href="#">Wiki</a></li>
+        <li><a href="#">Discover</a></li>
+      </ul>
+    </nav>
   </div>
 </template>
 
 <style scoped>
-.logo.vite:hover {
-  filter: drop-shadow(0 0 2em #747bff);
+header {
+  background-color: #42b983;
+  padding: 10px;
+  text-align: center;
+  color: white;
 }
 
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #249b73);
+nav {
+  margin: 20px 0;
+  padding: 10px;
+  background-color: #333;
+}
+
+nav h2 {
+  color: white;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+nav ul li {
+  padding: 10px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
+}
+
+main {
+  padding: 20px;
+}
+
+h1 {
+  color: white;
+}
+
+h2 {
+  color: #42b983;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  padding: 5px;
+  border-bottom: 1px solid #ddd;
+}
+</style>
+
+
+<script>
+import { invoke } from "@tauri-apps/api/core";
+import { trace, info, error, attachConsole } from "@tauri-apps/plugin-log";
+
+export default {
+  data() {
+    return {
+      interfaces: [],
+      folder: ['1.pcap','2.pcap']
+    };
+  },
+  async created() {
+    try {
+      this.interfaces = await invoke('get_interfaces');
+    } catch (error) {
+      console.error('Failed to fetch network interfaces:', error);
+    }
+  }
+};
+</script>
+
+<style scoped>
+h1 {
+  color: #42b983;
 }
 </style>
