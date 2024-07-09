@@ -1,7 +1,7 @@
-use log::{info, error};
+use log::{error, info};
+use pnet::datalink;
 use tauri::command;
 use whoami::fallible;
-use pnet::datalink;
 
 #[command]
 pub fn get_hostname() -> Result<String, String> {
@@ -9,11 +9,11 @@ pub fn get_hostname() -> Result<String, String> {
         Ok(hostname) => {
             info!("Fonction get hostname {}", hostname);
             Ok(hostname)
-        },
+        }
         Err(e) => {
             error!("Failed to get hostname: {}", e);
             Err(format!("Failed to get hostname: {}", e))
-        },
+        }
     }
 }
 
@@ -53,4 +53,3 @@ pub fn get_interfaces() -> Vec<String> {
     // Retourne le vecteur de noms d'interface.
     names
 }
-

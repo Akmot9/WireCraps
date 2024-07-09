@@ -4,13 +4,16 @@ mod states;
 use states::SonarState;
 
 mod commands;
-use commands::{get_hostname,get_interfaces};
+use commands::{get_hostname, get_interfaces};
 
 use tauri::{generate_context, generate_handler, Manager};
 use tauri_plugin_log::{Target, TargetKind};
 
 fn main() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_process::init())
+        .plugin(tauri_plugin_log::Builder::new().build())
+        .plugin(tauri_plugin_dialog::init())
         .plugin(
             tauri_plugin_log::Builder::new()
                 .targets([
@@ -25,12 +28,7 @@ fn main() {
             app.manage(SonarState::new(handle));
             Ok(())
         })
-        .invoke_handler(
-            generate_handler![
-                get_hostname,
-                get_interfaces
-
-            ])
+        .invoke_handler(generate_handler![get_hostname, get_interfaces])
         .run(generate_context!())
         .expect("error while running tauri application");
 }
