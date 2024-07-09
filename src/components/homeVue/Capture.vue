@@ -133,7 +133,7 @@ export default {
   async mounted() {
     const detach = await attachConsole();
     trace("mounted capture");
-    invoke('get_interfaces_tab').then((interfaces) => {
+    invoke('get_interfaces').then((interfaces) => {
       this.netInterfaces = interfaces;
       if (interfaces.length > 0) {
         this.selectedNetInterface = interfaces[interfaces.length - 1]; // Set the last item as default
@@ -141,7 +141,7 @@ export default {
     }).catch(error => {
       console.error("Failed to load interfaces:", error);
     });
-    invoke('get_hostname_to_string').then((hostname) => {
+    invoke('get_hostname').then((hostname) => {
       this.installationName = hostname;
     }).catch(error => {
       console.error("Failed to load hostname:", error);
