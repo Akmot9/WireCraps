@@ -6,6 +6,7 @@
 <script>
 import { getCurrent } from "@tauri-apps/api/window";
 import { confirm } from '@tauri-apps/plugin-dialog';
+import { info } from '@tauri-apps/plugin-log';
 
 export default {
   data() {
@@ -20,14 +21,17 @@ export default {
 
     // Set up the close event listener
     this.unlistenCloseEvent = await getCurrent().onCloseRequested(async (event) => {
+      console.log("Fermeture de l'application demandée ");
       const confirmed = await confirm(
         'Etes vous sûr ?',
         { title: 'Tauri', kind: 'warning' }
       );
       if (!confirmed) {
+        console.log("Fermeture de l'application, satut: ", confirmed.valueOf());
         // User did not confirm closing the window; let's prevent it
         event.preventDefault();
       }
+
     });
   },
 
